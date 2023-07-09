@@ -9,6 +9,7 @@ import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { MobileNav } from "@/components/mobile-nav"
+import GlobalSearch from "./global-search"
 
 interface MainNavProps {
   items?: MainNavItem[]
@@ -20,7 +21,7 @@ export function MainNav({ items, children }: MainNavProps) {
   const [showMobileMenu, setShowMobileMenu] = React.useState<boolean>(false)
 
   return (
-    <div className="flex gap-6 md:gap-10">
+    <div className="flex w-full gap-6 md:gap-10">
       <Link href="/" className="hidden items-center space-x-2 md:flex">
         <Icons.logo />
         <span className="hidden font-bold sm:inline-block">
@@ -28,7 +29,7 @@ export function MainNav({ items, children }: MainNavProps) {
         </span>
       </Link>
       {items?.length ? (
-        <nav className="hidden gap-6 md:flex">
+        <nav className="mx-auto hidden gap-6 md:flex">
           {items?.map((item, index) => (
             <Link
               key={index}
@@ -46,13 +47,14 @@ export function MainNav({ items, children }: MainNavProps) {
           ))}
         </nav>
       ) : null}
-      <button
-        className="flex items-center space-x-2 md:hidden"
-        onClick={() => setShowMobileMenu(!showMobileMenu)}
-      >
-        {showMobileMenu ? <Icons.close /> : <Icons.logo />}
-        <span className="font-bold">Menu</span>
-      </button>
+      <div className="flex items-center space-x-2 md:hidden">
+        <button
+          onClick={() => setShowMobileMenu(!showMobileMenu)}
+        >
+          {showMobileMenu ? <Icons.close /> : <Icons.logo />}
+          <span className="font-bold">Menu</span>
+        </button>
+      </div>
       {showMobileMenu && items && (
         <MobileNav items={items}>{children}</MobileNav>
       )}
